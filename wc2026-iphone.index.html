@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="كأس العالم ٢٠٢٦">
+<meta name="theme-color" content="#0a1628">
+<title>كأس العالم 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a1628;--surface:#121f38;--card:#1a2d4a;--border:#243857;--gold:#f0b429;--live:#22c55e;--blue:#3b82f6;--text:#e8edf5;--muted:#8ca0bc;--safe-top:env(safe-area-inset-top,44px);--safe-bot:env(safe-area-inset-bottom,34px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;width:100%;background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;overflow:hidden}
+#app{display:flex;flex-direction:column;height:100dvh;max-width:430px;margin:0 auto}
+#sb{height:var(--safe-top);background:var(--bg);flex-shrink:0}
+header{background:var(--bg);padding:10px 16px 8px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid var(--border)}
+.hlogo{display:flex;align-items:center;gap:9px}
+.badge{width:34px;height:34px;background:linear-gradient(135deg,var(--gold),#e8960a);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.htext h1{font-size:13px;font-weight:900;line-height:1}
+.htext p{font-size:9px;color:var(--muted);margin-top:1px}
+.hright{display:flex;align-items:center;gap:6px}
+.tzbadge{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:3px 9px;font-size:10px;color:var(--gold);font-weight:700}
+#rbtn{width:30px;height:30px;background:var(--card);border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px}
+#rbtn.spin{animation:sp .6s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+#srcbadge{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700}
+#srcbadge.live{background:rgba(34,197,94,.15);color:var(--live);border:1px solid rgba(34,197,94,.3)}
+#srcbadge.cached{background:rgba(240,180,41,.1);color:var(--gold);border:1px solid rgba(240,180,41,.25)}
+#tabs{display:flex;background:var(--surface);border-top:1px solid var(--border);padding-bottom:var(--safe-bot);flex-shrink:0}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 4px 7px;cursor:pointer;font-size:9px;color:var(--muted);font-weight:600;gap:2px}
+.tab.on{color:var(--gold)}
+.ti{font-size:19px;line-height:1}
+#content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.page{display:none;padding:14px}
+.page.on{display:block}
+#ib{display:none;background:linear-gradient(135deg,#1a3560,#0d2040);border:1px solid var(--gold);border-radius:14px;margin:0 14px 10px;padding:12px 14px}
+#ib p{font-size:11px;color:var(--text);line-height:1.6}
+#ib strong{color:var(--gold)}
+#ibc{float:left;background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer}
+.lpill{display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.4);border-radius:20px;padding:2px 9px;font-size:10px;color:var(--live);font-weight:700}
+.ldot{width:6px;height:6px;background:var(--live);border-radius:50%;animation:pu 1s infinite;display:inline-block}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.3}}
+.hero{background:linear-gradient(145deg,#1a3560,#0f2040);border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:14px;position:relative;overflow:hidden}
+.hero::before{content:'⚽';position:absolute;bottom:-8px;right:8px;font-size:72px;opacity:.05;transform:rotate(-15deg)}
+.htop{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.hstatus{font-size:10px;color:var(--muted)}
+.mmain{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tside{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px}
+.fc{width:52px;height:52px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,.15);background:var(--card);display:flex;align-items:center;justify-content:center}
+.fc img{width:100%;height:100%;object-fit:cover}
+.tn{font-size:11px;font-weight:700;text-align:center;line-height:1.3}
+.sbox{display:flex;align-items:center;gap:7px}
+.sn{font-size:40px;font-weight:900;min-width:38px;text-align:center;line-height:1}
+.ss{font-size:26px;color:var(--muted);font-weight:300}
+.hfoot{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);font-size:10px;color:var(--muted)}
+.stitle{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:9px;display:flex;align-items:center;justify-content:space-between}
+.mlist{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.mrow{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:9px}
+.mrow.lr{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.04)}
+.mtime{min-width:44px;text-align:center;font-size:11px;font-weight:700;color:var(--gold)}
+.mtime.lt{color:var(--live)}
+.mteams{flex:1;display:flex;flex-direction:column;gap:5px}
+.mteam{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600}
+.fs{width:20px;height:20px;border-radius:50%;overflow:hidden;background:var(--surface);flex-shrink:0}
+.fs img{width:100%;height:100%;object-fit:cover}
+.mscores{display:flex;flex-direction:column;gap:5px;align-items:center}
+.mscore{font-size:15px;font-weight:900;min-width:22px;text-align:center}
+.mgr{font-size:9px;color:var(--muted);font-weight:700;background:var(--surface);border-radius:5px;padding:1px 5px;white-space:nowrap}
+.gf{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;margin-bottom:12px}
+.gf::-webkit-scrollbar{display:none}
+.gfb{flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;background:var(--card);border:1px solid var(--border);color:var(--muted);cursor:pointer}
+.gfb.on{background:var(--gold);border-color:var(--gold);color:#0a1628}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px}
+.sh{background:linear-gradient(135deg,#1e3c6e,#162d52);padding:9px 12px;display:flex;align-items:center;justify-content:space-between;font-size:11px;font-weight:700}
+.sgn{color:var(--gold)}
+.scols{display:flex;gap:2px;color:var(--muted);font-size:9px}
+.scols span{min-width:20px;text-align:center}
+.srow{display:flex;align-items:center;gap:7px;padding:8px 12px;border-top:1px solid rgba(255,255,255,.04)}
+.spos{font-size:10px;color:var(--muted);min-width:12px;text-align:center;font-weight:700}
+.spos.q{color:var(--blue)}
+.fxs{width:18px;height:18px;border-radius:50%;overflow:hidden;background:var(--surface);flex-shrink:0}
+.fxs img{width:100%;height:100%;object-fit:cover}
+.snm{flex:1;font-size:11px;font-weight:600}
+.sts{display:flex;gap:2px}
+.sts span{min-width:20px;text-align:center;font-size:11px;color:var(--muted)}
+.pts{font-weight:900!important;color:var(--text)!important}
+.dc{font-size:10px;color:var(--muted);font-weight:600;text-align:center;padding:3px 0 7px}
+.sk{background:linear-gradient(90deg,var(--card) 25%,var(--border) 50%,var(--card) 75%);background-size:200% 100%;animation:shim 1.4s infinite;border-radius:10px;margin-bottom:8px}
+@keyframes shim{to{background-position:-200% 0}}
+.tb{display:inline-block;background:rgba(240,180,41,.15);border:1px solid rgba(240,180,41,.3);border-radius:5px;padding:0 5px;font-size:9px;color:var(--gold);font-weight:700;margin-top:2px}
+.stb{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px;gap:10px;text-align:center;color:var(--muted)}
+.stb .em{font-size:36px}
+.stb p{font-size:12px;line-height:1.6}
+#lastup{font-size:9px;color:var(--muted);text-align:center;padding:4px 0 10px}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="sb"></div>
+  <header>
+    <div class="hlogo">
+      <div class="badge">🏆</div>
+      <div class="htext">
+        <h1>كأس العالم 2026</h1>
+        <p>FIFA World Cup · USA · CAN · MEX</p>
+      </div>
+    </div>
+    <div class="hright">
+      <span id="srcbadge" class="cached">📡</span>
+      <div class="tzbadge">🕐 المغرب</div>
+      <div id="rbtn" onclick="loadData(true)">🔄</div>
+    </div>
+  </header>
+  <div id="ib">
+    <button id="ibc" onclick="this.parentElement.style.display='none'">✕</button>
+    <p>📲 لإضافة التطبيق: اضغط <strong>Share ↑</strong> ثم <strong>Add to Home Screen</strong></p>
+  </div>
+  <div id="content">
+    <div class="page on" id="p-home">
+      <div id="hero"></div>
+      <div class="stitle"><span>مباريات اليوم والقادمة</span><span id="cnt" style="color:var(--gold)"></span></div>
+      <div id="ulist"></div>
+      <div id="lastup"></div>
+    </div>
+    <div class="page" id="p-groups">
+      <div class="gf" id="gfilter"></div>
+      <div id="gcontent"></div>
+    </div>
+    <div class="page" id="p-sched">
+      <div class="gf" id="sfilter"></div>
+      <div id="slist"></div>
+    </div>
+  </div>
+  <nav id="tabs">
+    <div class="tab on" data-p="home" onclick="sw('home')"><div class="ti">🏠</div><span>الرئيسية</span></div>
+    <div class="tab" data-p="groups" onclick="sw('groups')"><div class="ti">📊</div><span>المجموعات</span></div>
+    <div class="tab" data-p="sched" onclick="sw('sched')"><div class="ti">📅</div><span>الجدول</span></div>
+  </nav>
+</div>
+<script>
+// ── CONFIG ───────────────────────────────────────
+const TOKEN = "6a88c093fda643dfb733030be919a8e9";
+const TZ = "Africa/Casablanca";
+
+// ── FALLBACK DATA (مدمج) ──────────────────────────
+const FALLBACK = [{"e":1781204400000,"ar1":"المكسيك","ar2":"جنوب أفريقيا","iso1":"mx","iso2":"za","g":"Group A","r":"الجولة 1","s":{"ft":[2,0],"ht":[1,0]},"gnd":"Mexico City"},{"e":1781229600000,"ar1":"كوريا الجنوبية","ar2":"التشيك","iso1":"kr","iso2":"cz","g":"Group A","r":"الجولة 1","s":{"ft":[2,1],"ht":[0,0]},"gnd":"Guadalajara (Zapopan)"},{"e":1781798400000,"ar1":"التشيك","ar2":"جنوب أفريقيا","iso1":"cz","iso2":"za","g":"Group A","r":"الجولة 8","s":null,"gnd":"Atlanta"},{"e":1781830800000,"ar1":"المكسيك","ar2":"كوريا الجنوبية","iso1":"mx","iso2":"kr","g":"Group A","r":"الجولة 8","s":null,"gnd":"Guadalajara (Zapopan)"},{"e":1782349200000,"ar1":"التشيك","ar2":"المكسيك","iso1":"cz","iso2":"mx","g":"Group A","r":"الجولة 14","s":null,"gnd":"Mexico City"},{"e":1782349200000,"ar1":"جنوب أفريقيا","ar2":"كوريا الجنوبية","iso1":"za","iso2":"kr","g":"Group A","r":"الجولة 14","s":null,"gnd":"Monterrey (Guadalupe)"},{"e":1781290800000,"ar1":"كندا","ar2":"البوسنة","iso1":"ca","iso2":"ba","g":"Group B","r":"الجولة 2","s":null,"gnd":"Toronto"},{"e":1781377200000,"ar1":"قطر","ar2":"سويسرا","iso1":"qa","iso2":"ch","g":"Group B","r":"الجولة 3","s":null,"gnd":"San Francisco Bay Area (Santa Clara)"},{"e":1781809200000,"ar1":"سويسرا","ar2":"البوسنة","iso1":"ch","iso2":"ba","g":"Group B","r":"الجولة 8","s":null,"gnd":"Los Angeles (Inglewood)"},{"e":1781820000000,"ar1":"كندا","ar2":"قطر","iso1":"ca","iso2":"qa","g":"Group B","r":"الجولة 8","s":null,"gnd":"Vancouver"},{"e":1782327600000,"ar1":"سويسرا","ar2":"كندا","iso1":"ch","iso2":"ca","g":"Group B","r":"الجولة 14","s":null,"gnd":"Vancouver"},{"e":1782327600000,"ar1":"البوسنة","ar2":"قطر","iso1":"ba","iso2":"qa","g":"Group B","r":"الجولة 14","s":null,"gnd":"Seattle"},{"e":1781388000000,"ar1":"البرازيل","ar2":"المغرب","iso1":"br","iso2":"ma","g":"Group C","r":"الجولة 3","s":null,"gnd":"New York/New Jersey (East Rutherford)"},{"e":1781398800000,"ar1":"هايتي","ar2":"اسكتلندا","iso1":"ht","iso2":"gb-sct","g":"Group C","r":"الجولة 3","s":null,"gnd":"Boston (Foxborough)"},{"e":1781906400000,"ar1":"اسكتلندا","ar2":"المغرب","iso1":"gb-sct","iso2":"ma","g":"Group C","r":"الجولة 9","s":null,"gnd":"Boston (Foxborough)"},{"e":1781915400000,"ar1":"البرازيل","ar2":"هايتي","iso1":"br","iso2":"ht","g":"Group C","r":"الجولة 9","s":null,"gnd":"Philadelphia"},{"e":1782338400000,"ar1":"اسكتلندا","ar2":"البرازيل","iso1":"gb-sct","iso2":"br","g":"Group C","r":"الجولة 14","s":null,"gnd":"Miami (Miami Gardens)"},{"e":1782338400000,"ar1":"المغرب","ar2":"هايتي","iso1":"ma","iso2":"ht","g":"Group C","r":"الجولة 14","s":null,"gnd":"Atlanta"},{"e":1781312400000,"ar1":"الولايات المتحدة","ar2":"باراغواي","iso1":"us","iso2":"py","g":"Group D","r":"الجولة 2","s":null,"gnd":"Los Angeles (Inglewood)"},{"e":1781409600000,"ar1":"أستراليا","ar2":"تركيا","iso1":"au","iso2":"tr","g":"Group D","r":"الجولة 3","s":null,"gnd":"Vancouver"},{"e":1781895600000,"ar1":"الولايات المتحدة","ar2":"أستراليا","iso1":"us","iso2":"au","g":"Group D","r":"الجولة 9","s":null,"gnd":"Seattle"},{"e":1781924400000,"ar1":"تركيا","ar2":"باراغواي","iso1":"tr","iso2":"py","g":"Group D","r":"الجولة 9","s":null,"gnd":"San Francisco Bay Area (Santa Clara)"},{"e":1782439200000,"ar1":"تركيا","ar2":"الولايات المتحدة","iso1":"tr","iso2":"us","g":"Group D","r":"الجولة 15","s":null,"gnd":"Los Angeles (Inglewood)"},{"e":1782439200000,"ar1":"باراغواي","ar2":"أستراليا","iso1":"py","iso2":"au","g":"Group D","r":"الجولة 15","s":null,"gnd":"San Francisco Bay Area (Santa Clara)"},{"e":1781456400000,"ar1":"ألمانيا","ar2":"كوراساو","iso1":"de","iso2":"cw","g":"Group E","r":"الجولة 4","s":null,"gnd":"Houston"},{"e":1781478000000,"ar1":"كوت ديفوار","ar2":"الإكوادور","iso1":"ci","iso2":"ec","g":"Group E","r":"الجولة 4","s":null,"gnd":"Philadelphia"},{"e":1781985600000,"ar1":"ألمانيا","ar2":"كوت ديفوار","iso1":"de","iso2":"ci","g":"Group E","r":"الجولة 10","s":null,"gnd":"Toronto"},{"e":1782000000000,"ar1":"الإكوادور","ar2":"كوراساو","iso1":"ec","iso2":"cw","g":"Group E","r":"الجولة 10","s":null,"gnd":"Kansas City"},{"e":1782417600000,"ar1":"كوراساو","ar2":"كوت ديفوار","iso1":"cw","iso2":"ci","g":"Group E","r":"الجولة 15","s":null,"gnd":"Philadelphia"},{"e":1782417600000,"ar1":"الإكوادور","ar2":"ألمانيا","iso1":"ec","iso2":"de","g":"Group E","r":"الجولة 15","s":null,"gnd":"New York/New Jersey (East Rutherford)"},{"e":1781467200000,"ar1":"هولندا","ar2":"اليابان","iso1":"nl","iso2":"jp","g":"Group F","r":"الجولة 4","s":null,"gnd":"Dallas (Arlington)"},{"e":1781488800000,"ar1":"السويد","ar2":"تونس","iso1":"se","iso2":"tn","g":"Group F","r":"الجولة 4","s":null,"gnd":"Monterrey (Guadalupe)"},{"e":1781974800000,"ar1":"هولندا","ar2":"السويد","iso1":"nl","iso2":"se","g":"Group F","r":"الجولة 10","s":null,"gnd":"Houston"},{"e":1782014400000,"ar1":"تونس","ar2":"اليابان","iso1":"tn","iso2":"jp","g":"Group F","r":"الجولة 10","s":null,"gnd":"Monterrey (Guadalupe)"},{"e":1782428400000,"ar1":"اليابان","ar2":"السويد","iso1":"jp","iso2":"se","g":"Group F","r":"الجولة 15","s":null,"gnd":"Dallas (Arlington)"},{"e":1782428400000,"ar1":"تونس","ar2":"هولندا","iso1":"tn","iso2":"nl","g":"Group F","r":"الجولة 15","s":null,"gnd":"Kansas City"},{"e":1781550000000,"ar1":"بلجيكا","ar2":"مصر","iso1":"be","iso2":"eg","g":"Group G","r":"الجولة 5","s":null,"gnd":"Seattle"},{"e":1781571600000,"ar1":"إيران","ar2":"نيوزيلندا","iso1":"ir","iso2":"nz","g":"Group G","r":"الجولة 5","s":null,"gnd":"Los Angeles (Inglewood)"},{"e":1782068400000,"ar1":"بلجيكا","ar2":"إيران","iso1":"be","iso2":"ir","g":"Group G","r":"الجولة 11","s":null,"gnd":"Los Angeles (Inglewood)"},{"e":1782090000000,"ar1":"نيوزيلندا","ar2":"مصر","iso1":"nz","iso2":"eg","g":"Group G","r":"الجولة 11","s":null,"gnd":"Vancouver"},{"e":1782529200000,"ar1":"مصر","ar2":"إيران","iso1":"eg","iso2":"ir","g":"Group G","r":"الجولة 16","s":null,"gnd":"Seattle"},{"e":1782529200000,"ar1":"نيوزيلندا","ar2":"بلجيكا","iso1":"nz","iso2":"be","g":"Group G","r":"الجولة 16","s":null,"gnd":"Vancouver"},{"e":1781539200000,"ar1":"إسبانيا","ar2":"الرأس الأخضر","iso1":"es","iso2":"cv","g":"Group H","r":"الجولة 5","s":null,"gnd":"Atlanta"},{"e":1781560800000,"ar1":"السعودية","ar2":"أوروغواي","iso1":"sa","iso2":"uy","g":"Group H","r":"الجولة 5","s":null,"gnd":"Miami (Miami Gardens)"},{"e":1782057600000,"ar1":"إسبانيا","ar2":"السعودية","iso1":"es","iso2":"sa","g":"Group H","r":"الجولة 11","s":null,"gnd":"Atlanta"},{"e":1782079200000,"ar1":"أوروغواي","ar2":"الرأس الأخضر","iso1":"uy","iso2":"cv","g":"Group H","r":"الجولة 11","s":null,"gnd":"Miami (Miami Gardens)"},{"e":1782518400000,"ar1":"الرأس الأخضر","ar2":"السعودية","iso1":"cv","iso2":"sa","g":"Group H","r":"الجولة 16","s":null,"gnd":"Houston"},{"e":1782518400000,"ar1":"أوروغواي","ar2":"إسبانيا","iso1":"uy","iso2":"es","g":"Group H","r":"الجولة 16","s":null,"gnd":"Guadalajara (Zapopan)"},{"e":1781636400000,"ar1":"فرنسا","ar2":"السنغال","iso1":"fr","iso2":"sn","g":"Group I","r":"الجولة 6","s":null,"gnd":"New York/New Jersey (East Rutherford)"},{"e":1781647200000,"ar1":"العراق","ar2":"النرويج","iso1":"iq","iso2":"no","g":"Group I","r":"الجولة 6","s":null,"gnd":"Boston (Foxborough)"},{"e":1782162000000,"ar1":"فرنسا","ar2":"العراق","iso1":"fr","iso2":"iq","g":"Group I","r":"الجولة 12","s":null,"gnd":"Philadelphia"},{"e":1782172800000,"ar1":"النرويج","ar2":"السنغال","iso1":"no","iso2":"sn","g":"Group I","r":"الجولة 12","s":null,"gnd":"New York/New Jersey (East Rutherford)"},{"e":1782500400000,"ar1":"النرويج","ar2":"فرنسا","iso1":"no","iso2":"fr","g":"Group I","r":"الجولة 16","s":null,"gnd":"Boston (Foxborough)"},{"e":1782500400000,"ar1":"السنغال","ar2":"العراق","iso1":"sn","iso2":"iq","g":"Group I","r":"الجولة 16","s":null,"gnd":"Toronto"},{"e":1781658000000,"ar1":"الأرجنتين","ar2":"الجزائر","iso1":"ar","iso2":"dz","g":"Group J","r":"الجولة 6","s":null,"gnd":"Kansas City"},{"e":1781668800000,"ar1":"النمسا","ar2":"الأردن","iso1":"at","iso2":"jo","g":"Group J","r":"الجولة 6","s":null,"gnd":"San Francisco Bay Area (Santa Clara)"},{"e":1782147600000,"ar1":"الأرجنتين","ar2":"النمسا","iso1":"ar","iso2":"at","g":"Group J","r":"الجولة 12","s":null,"gnd":"Dallas (Arlington)"},{"e":1782183600000,"ar1":"الأردن","ar2":"الجزائر","iso1":"jo","iso2":"dz","g":"Group J","r":"الجولة 12","s":null,"gnd":"San Francisco Bay Area (Santa Clara)"},{"e":1782612000000,"ar1":"الجزائر","ar2":"النمسا","iso1":"dz","iso2":"at","g":"Group J","r":"الجولة 17","s":null,"gnd":"Kansas City"},{"e":1782612000000,"ar1":"الأردن","ar2":"الأرجنتين","iso1":"jo","iso2":"ar","g":"Group J","r":"الجولة 17","s":null,"gnd":"Dallas (Arlington)"},{"e":1781715600000,"ar1":"البرتغال","ar2":"الكونغو","iso1":"pt","iso2":"cd","g":"Group K","r":"الجولة 7","s":null,"gnd":"Houston"},{"e":1781748000000,"ar1":"أوزبكستان","ar2":"كولومبيا","iso1":"uz","iso2":"co","g":"Group K","r":"الجولة 7","s":null,"gnd":"Mexico City"},{"e":1782234000000,"ar1":"البرتغال","ar2":"أوزبكستان","iso1":"pt","iso2":"uz","g":"Group K","r":"الجولة 13","s":null,"gnd":"Houston"},{"e":1782266400000,"ar1":"كولومبيا","ar2":"الكونغو","iso1":"co","iso2":"cd","g":"Group K","r":"الجولة 13","s":null,"gnd":"Guadalajara (Zapopan)"},{"e":1782603000000,"ar1":"كولومبيا","ar2":"البرتغال","iso1":"co","iso2":"pt","g":"Group K","r":"الجولة 17","s":null,"gnd":"Miami (Miami Gardens)"},{"e":1782603000000,"ar1":"الكونغو","ar2":"أوزبكستان","iso1":"cd","iso2":"uz","g":"Group K","r":"الجولة 17","s":null,"gnd":"Atlanta"},{"e":1781726400000,"ar1":"إنجلترا","ar2":"كرواتيا","iso1":"gb-eng","iso2":"hr","g":"Group L","r":"الجولة 7","s":null,"gnd":"Dallas (Arlington)"},{"e":1781737200000,"ar1":"غانا","ar2":"بنما","iso1":"gh","iso2":"pa","g":"Group L","r":"الجولة 7","s":null,"gnd":"Toronto"},{"e":1782244800000,"ar1":"إنجلترا","ar2":"غانا","iso1":"gb-eng","iso2":"gh","g":"Group L","r":"الجولة 13","s":null,"gnd":"Boston (Foxborough)"},{"e":1782255600000,"ar1":"بنما","ar2":"كرواتيا","iso1":"pa","iso2":"hr","g":"Group L","r":"الجولة 13","s":null,"gnd":"Toronto"},{"e":1782594000000,"ar1":"بنما","ar2":"إنجلترا","iso1":"pa","iso2":"gb-eng","g":"Group L","r":"الجولة 17","s":null,"gnd":"New York/New Jersey (East Rutherford)"},{"e":1782594000000,"ar1":"كرواتيا","ar2":"غانا","iso1":"hr","iso2":"gh","g":"Group L","r":"الجولة 17","s":null,"gnd":"Philadelphia"},{"e":1782673200000,"ar1":"2A","ar2":"2B","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Los Angeles (Inglewood)"},{"e":1782765000000,"ar1":"1E","ar2":"3A/B/C/D/F","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Boston (Foxborough)"},{"e":1782781200000,"ar1":"1F","ar2":"2C","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Monterrey (Guadalupe)"},{"e":1782752400000,"ar1":"1C","ar2":"2F","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Houston"},{"e":1782853200000,"ar1":"1I","ar2":"3C/D/F/G/H","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"New York/New Jersey (East Rutherford)"},{"e":1782838800000,"ar1":"2E","ar2":"2I","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Dallas (Arlington)"},{"e":1782867600000,"ar1":"1A","ar2":"3C/E/F/H/I","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Mexico City"},{"e":1782921600000,"ar1":"1L","ar2":"3E/H/I/J/K","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Atlanta"},{"e":1782950400000,"ar1":"1D","ar2":"3B/E/F/I/J","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"San Francisco Bay Area (Santa Clara)"},{"e":1782936000000,"ar1":"1G","ar2":"3A/E/H/I/J","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Seattle"},{"e":1783033200000,"ar1":"2K","ar2":"2L","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Toronto"},{"e":1783018800000,"ar1":"1H","ar2":"2J","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Los Angeles (Inglewood)"},{"e":1783047600000,"ar1":"1B","ar2":"3E/F/G/I/J","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Vancouver"},{"e":1783116000000,"ar1":"1J","ar2":"2H","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Miami (Miami Gardens)"},{"e":1783128600000,"ar1":"1K","ar2":"3D/E/I/J/L","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Kansas City"},{"e":1783101600000,"ar1":"2D","ar2":"2G","iso1":"","iso2":"","g":"","r":"دور الـ32","s":null,"gnd":"Dallas (Arlington)"},{"e":1783198800000,"ar1":"W74","ar2":"W77","iso1":"","iso2":"","g":"","r":"دور الـ16","s":null,"gnd":"Philadelphia"},{"e":1783184400000,"ar1":"W73","ar2":"W75","iso1":"","iso2":"","g":"","r":"دور الـ16","s":null,"gnd":"Houston"},{"e":1783281600000,"ar1":"W76","ar2":"W78","iso1":"","iso2":"","g":"","r":"دور الـ16","s":null,"gnd":"New York/New Jersey (East Rutherford)"},{"e":1783296000000,"ar1":"W79","ar2":"W80","iso1":"","iso2":"","g":"","r":"دور الـ16","s":null,"gnd":"Mexico City"},{"e":1783364400000,"ar1":"W83","ar2":"W84","iso1":"","iso2":"","g":"","r":"دور الـ16","s":null,"gnd":"Dallas (Arlington)"},{"e":1783382400000,"ar1":"W81","ar2":"W82","iso1":"","iso2":"","g":"","r":"دور الـ16","s":null,"gnd":"Seattle"},{"e":1783440000000,"ar1":"W86","ar2":"W88","iso1":"","iso2":"","g":"","r":"دور الـ16","s":null,"gnd":"Atlanta"},{"e":1783454400000,"ar1":"W85","ar2":"W87","iso1":"","iso2":"","g":"","r":"دور الـ16","s":null,"gnd":"Vancouver"},{"e":1783627200000,"ar1":"W89","ar2":"W90","iso1":"","iso2":"","g":"","r":"ربع النهائي","s":null,"gnd":"Boston (Foxborough)"},{"e":1783710000000,"ar1":"W93","ar2":"W94","iso1":"","iso2":"","g":"","r":"ربع النهائي","s":null,"gnd":"Los Angeles (Inglewood)"},{"e":1783803600000,"ar1":"W91","ar2":"W92","iso1":"","iso2":"","g":"","r":"ربع النهائي","s":null,"gnd":"Miami (Miami Gardens)"},{"e":1783818000000,"ar1":"W95","ar2":"W96","iso1":"","iso2":"","g":"","r":"ربع النهائي","s":null,"gnd":"Kansas City"},{"e":1784055600000,"ar1":"W97","ar2":"W98","iso1":"","iso2":"","g":"","r":"نصف النهائي","s":null,"gnd":"Dallas (Arlington)"},{"e":1784142000000,"ar1":"W99","ar2":"W100","iso1":"","iso2":"","g":"","r":"نصف النهائي","s":null,"gnd":"Atlanta"},{"e":1784408400000,"ar1":"L101","ar2":"L102","iso1":"","iso2":"","g":"","r":"المركز الثالث","s":null,"gnd":"Miami (Miami Gardens)"},{"e":1784487600000,"ar1":"W101","ar2":"W102","iso1":"","iso2":"","g":"","r":"النهائي","s":null,"gnd":"New York/New Jersey (East Rutherford)"}];
+
+// ── STATE ────────────────────────────────────────
+let matches = [], standings = {}, usingLive = false;
+let AG = "Group A", SG = "ALL";
+
+// ── LOAD DATA ────────────────────────────────────
+async function loadData(manual=false){
+  spin(true);
+  if(!manual && matches.length) { spin(false); return; }
+  try {
+    const [mRes, sRes] = await Promise.all([
+      fetch("https://api.football-data.org/v4/competitions/WC/matches", {headers:{"X-Auth-Token":TOKEN}}),
+      fetch("https://api.football-data.org/v4/competitions/WC/standings", {headers:{"X-Auth-Token":TOKEN}})
+    ]);
+    if(!mRes.ok) throw new Error("API "+mRes.status);
+    const mData = await mRes.json();
+    const sData = await sRes.json();
+    // Convert API format to our format
+    matches = (mData.matches||[]).map(m=>({
+      e: new Date(m.utcDate).getTime(),
+      ar1: arName(m.homeTeam?.shortName||m.homeTeam?.name||"?"),
+      ar2: arName(m.awayTeam?.shortName||m.awayTeam?.name||"?"),
+      iso1: tlaToIso(m.homeTeam?.tla),
+      iso2: tlaToIso(m.awayTeam?.tla),
+      crest1: m.homeTeam?.crest,
+      crest2: m.awayTeam?.crest,
+      g: m.group?.replace("GROUP_","Group ") || "",
+      r: roundAr(m.stage||""),
+      s: m.score?.fullTime?.home!=null ? {ft:[m.score.fullTime.home,m.score.fullTime.away]} : null,
+      live: ["IN_PLAY","PAUSED","HALFTIME"].includes(m.status),
+      min: m.minute||"",
+      done: m.status==="FINISHED",
+      gnd: m.venue||"",
+    }));
+    // Parse standings
+    standings = {};
+    (sData.standings||[]).forEach(s=>{
+      if(s.type==="TOTAL"){
+        const g = s.group?.replace("GROUP_","Group ")||"";
+        standings[g] = (s.table||[]).map(r=>({
+          pos: r.position, name: arName(r.team?.shortName||r.team?.name||"?"),
+          iso: tlaToIso(r.team?.tla), crest: r.team?.crest,
+          mp:r.playedGames, gf:r.goalsFor, ga:r.goalsAgainst,
+          gd:r.goalDifference, pts:r.points
+        }));
+      }
+    });
+    usingLive = true;
+    setBadge(true);
+    setLastUp("مباشر من API");
+  } catch(e) {
+    // Use fallback
+    if(!matches.length){
+      matches = FALLBACK.map(m=>({...m, live:false, done: m.s!=null, min:""}));
+      // Compute standings from results
+      computeStandings();
+    }
+    usingLive = false;
+    setBadge(false);
+    setLastUp("بيانات محلية (لا اتصال بـ API)");
+  }
+  renderAll();
+  spin(false);
+}
+
+function setBadge(live){
+  const b = document.getElementById("srcbadge");
+  b.textContent = live ? "🟢 مباشر" : "📋 جدول";
+  b.className = live ? "srcbadge live" : "srcbadge cached";
+}
+
+function setLastUp(msg){
+  const t = new Date().toLocaleTimeString("fr-MA",{timeZone:TZ,hour:"2-digit",minute:"2-digit"});
+  document.getElementById("lastup").textContent = msg + " · " + t;
+}
+
+function spin(on){ document.getElementById("rbtn").classList.toggle("spin",on); }
+
+// ── COMPUTE STANDINGS FROM FALLBACK ──────────────
+function computeStandings(){
+  standings = {};
+  const groups = [...new Set(matches.map(m=>m.g).filter(Boolean))];
+  groups.forEach(g=>{
+    const pts={},mp={},gf={},ga={},names={},isos={},crests={};
+    const init=t=>{if(!pts[t]){pts[t]=0;mp[t]=0;gf[t]=0;ga[t]=0;}};
+    matches.filter(m=>m.g===g).forEach(m=>{
+      init(m.ar1);init(m.ar2);
+      names[m.ar1]=m.ar1;names[m.ar2]=m.ar2;
+      isos[m.ar1]=m.iso1;isos[m.ar2]=m.iso2;
+      if(m.s&&m.s.ft){
+        const [h,a]=m.s.ft;
+        mp[m.ar1]++;mp[m.ar2]++;
+        gf[m.ar1]+=h;ga[m.ar1]+=a;
+        gf[m.ar2]+=a;ga[m.ar2]+=h;
+        if(h>a)pts[m.ar1]+=3;else if(h<a)pts[m.ar2]+=3;else{pts[m.ar1]++;pts[m.ar2]++;}
+      }
+    });
+    const teams=Object.keys(pts).sort((a,b)=>{
+      const dp=pts[b]-pts[a];if(dp)return dp;
+      return(gf[b]-ga[b])-(gf[a]-ga[a]);
+    });
+    standings[g]=teams.map((t,i)=>({
+      pos:i+1,name:t,iso:isos[t],crest:null,
+      mp:mp[t],gf:gf[t],ga:ga[t],gd:gf[t]-ga[t],pts:pts[t]
+    }));
+  });
+}
+
+// ── ARABIC NAMES ─────────────────────────────────
+const AR_NAMES = {
+  "Mexico":"المكسيك","South Africa":"جنوب أفريقيا","Korea Republic":"كوريا الجنوبية",
+  "South Korea":"كوريا الجنوبية","Czechia":"التشيك","Czech Republic":"التشيك",
+  "Canada":"كندا","Bosnia and Herzegovina":"البوسنة","Bosnia & Herzegovina":"البوسنة",
+  "Qatar":"قطر","Switzerland":"سويسرا","Brazil":"البرازيل","Morocco":"المغرب",
+  "Haiti":"هايتي","Scotland":"اسكتلندا","United States":"الولايات المتحدة",
+  "USA":"الولايات المتحدة","Paraguay":"باراغواي","Australia":"أستراليا","Turkey":"تركيا",
+  "Türkiye":"تركيا","Germany":"ألمانيا","Curaçao":"كوراساو","Ivory Coast":"كوت ديفوار",
+  "Côte d'Ivoire":"كوت ديفوار","Ecuador":"الإكوادور","Netherlands":"هولندا",
+  "Japan":"اليابان","Sweden":"السويد","Tunisia":"تونس","Belgium":"بلجيكا",
+  "Egypt":"مصر","Iran":"إيران","New Zealand":"نيوزيلندا","Spain":"إسبانيا",
+  "Cape Verde":"الرأس الأخضر","Saudi Arabia":"السعودية","Uruguay":"أوروغواي",
+  "France":"فرنسا","Senegal":"السنغال","Iraq":"العراق","Norway":"النرويج",
+  "Argentina":"الأرجنتين","Algeria":"الجزائر","Austria":"النمسا","Jordan":"الأردن",
+  "Portugal":"البرتغال","DR Congo":"الكونغو","Congo DR":"الكونغو",
+  "Uzbekistan":"أوزبكستان","Colombia":"كولومبيا","England":"إنجلترا",
+  "Croatia":"كرواتيا","Ghana":"غانا","Panama":"بنما","Poland":"بولندا",
+  "Nigeria":"نيجيريا","Chile":"تشيلي","Venezuela":"فنزويلا",
+};
+function arName(n){ return AR_NAMES[n]||n; }
+
+const TLA_ISO = {
+  "MAR":"ma","BRA":"br","FRA":"fr","ARG":"ar","ESP":"es","GER":"de","ENG":"gb-eng",
+  "POR":"pt","NED":"nl","BEL":"be","URU":"uy","MEX":"mx","USA":"us","CAN":"ca",
+  "JPN":"jp","KOR":"kr","AUS":"au","SEN":"sn","EGY":"eg","GHA":"gh","TUN":"tn",
+  "ALG":"dz","RSA":"za","IRN":"ir","SAU":"sa","QAT":"qa","IRQ":"iq","JOR":"jo",
+  "CHE":"ch","SWE":"se","NOR":"no","POL":"pl","CRO":"hr","CZE":"cz","AUT":"at",
+  "SCO":"gb-sct","TUR":"tr","COL":"co","PAR":"py","ECU":"ec","PAN":"pa","HTI":"ht",
+  "BIH":"ba","UZB":"uz","COD":"cd","CIV":"ci","NZL":"nz","CPV":"cv","CUW":"cw",
+};
+function tlaToIso(tla){ return TLA_ISO[tla?.toUpperCase()]||""; }
+
+const ROUND_AR = {
+  "GROUP_STAGE":"مرحلة جماعية","LAST_32":"دور الـ32","LAST_16":"دور الـ16",
+  "QUARTER_FINALS":"ربع النهائي","SEMI_FINALS":"نصف النهائي",
+  "THIRD_PLACE":"المركز الثالث","FINAL":"النهائي",
+};
+function roundAr(s){ return ROUND_AR[s]||s; }
+
+// ── TIME ─────────────────────────────────────────
+function toMar(e,pat){
+  if(!e) return "—";
+  const d=new Date(e);
+  if(pat==="time") return d.toLocaleTimeString("fr-MA",{timeZone:TZ,hour:"2-digit",minute:"2-digit"});
+  if(pat==="date") return d.toLocaleDateString("ar-MA",{timeZone:TZ,month:"short",day:"numeric"});
+  if(pat==="day")  return d.toLocaleDateString("ar-MA",{timeZone:TZ,weekday:"long",month:"short",day:"numeric"});
+}
+function isToday(e){
+  if(!e)return false;
+  const o={timeZone:TZ};
+  return new Date().toLocaleDateString("en-US",o)===new Date(e).toLocaleDateString("en-US",o);
+}
+
+// ── FLAGS ─────────────────────────────────────────
+function flagImg(iso,crest,cls){
+  const src = crest || (iso ? "https://flagcdn.com/w40/"+iso+".png" : "");
+  if(!src) return "<div class='"+cls+"'></div>";
+  return "<div class='"+cls+"'><img src='"+src+"' onerror=\"this.style.display='none'\"></div>";
+}
+
+// ── FEATURED ─────────────────────────────────────
+function featured(){
+  const live=matches.find(m=>m.live);
+  if(live)return live;
+  const now=Date.now();
+  const next=matches.filter(m=>m.e>now&&!m.done).sort((a,b)=>a.e-b.e)[0];
+  if(next)return next;
+  return matches.filter(m=>m.done).sort((a,b)=>b.e-a.e)[0]||matches[0];
+}
+
+// ── RENDER ALL ────────────────────────────────────
+function renderAll(){
+  renderHome();
+  const cur=document.querySelector(".tab.on")?.dataset?.p;
+  if(cur==="groups")renderGroups();
+  if(cur==="sched")renderSched();
+}
+
+// ── HOME ─────────────────────────────────────────
+function renderHome(){
+  const f=featured();
+  const hel=document.getElementById("hero");
+  if(!f){hel.innerHTML="<div class='stb'><span class='em'>⚽</span><p>لا مباريات</p></div>";return;}
+  const time=toMar(f.e,"time"),date=toMar(f.e,"date");
+  const hs=f.s?f.s.ft[0]:"",as=f.s?f.s.ft[1]:"";
+  hel.innerHTML=
+    "<div class='hero'>"+
+    "<div class='htop'>"+
+    (f.live?"<div class='lpill'><span class='ldot'></span> مباشر "+(f.min?f.min+"'":"")+"</div>":
+             "<span class='hstatus'>"+(f.r||"")+" · "+(f.g||"")+"</span>")+
+    "<span style='font-size:10px;color:var(--muted)'>"+date+"</span></div>"+
+    "<div class='mmain'>"+
+    "<div class='tside'>"+flagImg(f.iso1,f.crest1,"fc")+"<div class='tn'>"+f.ar1+"</div></div>"+
+    "<div class='sbox'>"+
+    (f.s||f.live?"<span class='sn'>"+hs+"</span><span class='ss'>-</span><span class='sn'>"+as+"</span>":
+                 "<span style='font-size:20px;color:var(--gold);font-weight:900'>"+time+"</span>")+
+    "</div>"+
+    "<div class='tside'>"+flagImg(f.iso2,f.crest2,"fc")+"<div class='tn'>"+f.ar2+"</div></div>"+
+    "</div>"+
+    "<div class='hfoot'>🕐 "+time+" بتوقيت المغرب · "+date+"</div>"+
+    "</div>";
+
+  const now=Date.now();
+  const liveM=matches.filter(m=>m.live);
+  const todayD=matches.filter(m=>isToday(m.e)&&m.done);
+  const todayU=matches.filter(m=>isToday(m.e)&&!m.done&&!m.live).sort((a,b)=>a.e-b.e);
+  const fut=matches.filter(m=>m.e>now&&!isToday(m.e)&&!m.live).sort((a,b)=>a.e-b.e).slice(0,16);
+  const shown=[...liveM,...todayD,...todayU,...fut];
+  document.getElementById("cnt").textContent=
+    (liveM.length+todayD.length+todayU.length)>0?(liveM.length+todayD.length+todayU.length)+" مباراة اليوم":"";
+  document.getElementById("ulist").innerHTML=
+    shown.length?"<div class='mlist'>"+shown.map(rowHTML).join("")+"</div>":
+    "<div class='stb'><span class='em'>🗓</span><p>لا مباريات قريباً</p></div>";
+}
+
+// ── ROW ───────────────────────────────────────────
+function rowHTML(m){
+  const time=toMar(m.e,"time"),date=toMar(m.e,"date"),today=isToday(m.e);
+  const hs=m.s?m.s.ft[0]:null,as=m.s?m.s.ft[1]:null;
+  const grp=m.g?m.g.replace("Group ",""):"";
+  return "<div class='mrow"+(m.live?" lr":"")+"'>"+
+    "<div class='mtime"+(m.live?" lt":"")+"'>"+
+    (m.live?"<span class='ldot'></span>"+(m.min?m.min+"'":"مباشر"):time)+
+    (today&&!m.live?"<div class='tb'>اليوم</div>":"")+
+    (!today&&!m.live?"<div style='font-size:9px;color:var(--muted);margin-top:1px'>"+date+"</div>":"")+
+    "</div>"+
+    "<div class='mteams'>"+
+    "<div class='mteam'>"+flagImg(m.iso1,m.crest1,"fs")+"<span>"+m.ar1+"</span></div>"+
+    "<div class='mteam'>"+flagImg(m.iso2,m.crest2,"fs")+"<span>"+m.ar2+"</span></div>"+
+    "</div>"+
+    (hs!==null?"<div class='mscores'><div class='mscore'>"+hs+"</div><div class='mscore'>"+as+"</div></div>":"")+
+    "<div style='display:flex;flex-direction:column;align-items:flex-end;gap:3px'>"+
+    (grp?"<div class='mgr'>"+grp+"</div>":"")+
+    (m.done&&!m.live?"<div style='font-size:8px;color:var(--muted)'>ن</div>":"")+
+    "</div></div>";
+}
+
+// ── GROUPS ────────────────────────────────────────
+function renderGroups(){
+  const grps=[...new Set(matches.map(m=>m.g).filter(Boolean))].sort();
+  if(!grps.length){document.getElementById("gcontent").innerHTML="<div class='stb'><span class='em'>📊</span><p>جاري...</p></div>";return;}
+  if(!grps.includes(AG))AG=grps[0];
+  document.getElementById("gfilter").innerHTML=grps.map(g=>
+    "<div class='gfb "+(g===AG?"on":"")+"' onclick=\"selG('"+g+"')\">"+g.replace("Group ","")+"</div>"
+  ).join("");
+  renderStandings();
+}
+function selG(g){AG=g;document.querySelectorAll("#gfilter .gfb").forEach(b=>b.classList.toggle("on",b.textContent===g.replace("Group ","")));renderStandings();}
+function renderStandings(){
+  const el=document.getElementById("gcontent");
+  const table=standings[AG]||[];
+  const upcoming=matches.filter(m=>m.g===AG&&m.e>Date.now()&&!m.done&&!m.live).sort((a,b)=>a.e-b.e).slice(0,4);
+  el.innerHTML=
+    "<div class='sc'><div class='sh'><span class='sgn'>المجموعة "+AG.replace("Group ","")+"</span>"+
+    "<div class='scols'><span>لع</span><span>ف</span><span>ض</span><span>فر</span><span>ن</span></div></div>"+
+    table.map((r,i)=>{
+      const gd=r.gd>=0?"+"+r.gd:r.gd;
+      return "<div class='srow'>"+
+        "<span class='spos "+(i<2?"q":"")+"'>"+r.pos+"</span>"+
+        flagImg(r.iso,r.crest,"fxs")+
+        "<span class='snm'>"+r.name+"</span>"+
+        "<div class='sts'><span>"+r.mp+"</span><span>"+r.gf+"</span><span>"+r.ga+"</span><span>"+gd+"</span><span class='pts'>"+r.pts+"</span></div>"+
+        "</div>";
+    }).join("")+"</div>"+
+    (upcoming.length?"<div class='stitle' style='margin-top:14px'>مباريات قادمة</div><div class='mlist'>"+upcoming.map(rowHTML).join("")+"</div>":"");
+}
+
+// ── SCHEDULE ─────────────────────────────────────
+function renderSched(){
+  const grps=["ALL",...new Set(matches.filter(m=>m.g).map(m=>m.g))].sort((a,b)=>a==="ALL"?-1:b==="ALL"?1:a.localeCompare(b));
+  document.getElementById("sfilter").innerHTML=grps.map(g=>
+    "<div class='gfb "+(g===SG?"on":"")+"' onclick=\"selS('"+g+"')\">"+( g==="ALL"?"الكل":g.replace("Group ",""))+"</div>"
+  ).join("");
+  renderSchedList();
+}
+function selS(g){SG=g;document.querySelectorAll("#sfilter .gfb").forEach(b=>b.classList.toggle("on",(g==="ALL"&&b.textContent==="الكل")||b.textContent===g.replace("Group ","")));renderSchedList();}
+function renderSchedList(){
+  let ms=[...matches].sort((a,b)=>a.e-b.e);
+  if(SG!=="ALL")ms=ms.filter(m=>m.g===SG);
+  if(!ms.length){document.getElementById("slist").innerHTML="<div class='stb'><span class='em'>📅</span><p>لا مباريات</p></div>";return;}
+  const byDate={};
+  ms.forEach(m=>{const k=toMar(m.e,"day");if(!byDate[k])byDate[k]=[];byDate[k].push(m);});
+  document.getElementById("slist").innerHTML=
+    "<div class='mlist'>"+Object.entries(byDate).map(([d,gs])=>"<div class='dc'>"+d+"</div>"+gs.map(rowHTML).join("")).join("")+"</div>";
+}
+
+// ── TABS ─────────────────────────────────────────
+function sw(p){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.p===p));
+  document.querySelectorAll(".page").forEach(pg=>pg.classList.toggle("on",pg.id==="p-"+p));
+  document.getElementById("content").scrollTop=0;
+  if(p==="groups")renderGroups();
+  if(p==="sched")renderSched();
+}
+
+// ── INSTALL ──────────────────────────────────────
+if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.navigator.standalone)
+  document.getElementById("ib").style.display="block";
+
+// ── INIT ─────────────────────────────────────────
+loadData(true);
+setInterval(()=>loadData(true),60000);
+</script>
+</body>
+</html>
